@@ -37,20 +37,23 @@ def get_user_location(runtime: ToolRuntime[Context]) -> str:
     return "Florida" if user_id == "1" else "SF"
 
 # Configure model
+model = init_chat_model(
+    model="qwen3.5-plus",
+    model_provider="openai",
+    api_key="sk-8710483a982e426aa08765f872601588",
+    base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",
+    temperature=0,
+    extra_body={
+        "enable_thinking": False   # 👈 关键：关闭 thinking mode
+    }
+)
 # model = init_chat_model(
-#     model="qwen3.5-plus",
+#     model="deepseek-chat",
 #     model_provider="openai",
-#     api_key="sk-8710483a982e426aa08765f872601588",
-#     base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",
+#     api_key="sk-48f60e3c7602404fb45123ee1f7aae1c",
+#     base_url="https://api.deepseek.com",
 #     temperature=0
 # )
-model = init_chat_model(
-    model="deepseek-chat",
-    model_provider="openai",
-    api_key="sk-48f60e3c7602404fb45123ee1f7aae1c",
-    base_url="https://api.deepseek.com",
-    temperature=0
-)
 
 # Define response format
 @dataclass
