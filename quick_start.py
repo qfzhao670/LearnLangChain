@@ -30,6 +30,7 @@ def get_weather_for_location(city: str) -> str:
     """Get weather for a given city."""
     return f"It's always sunny in {city}!"
 
+#ToolRuntime 是 LangChain 提供的一个对象，专门用来：👉 在 tool 里面拿到“额外信息”
 @tool
 def get_user_location(runtime: ToolRuntime[Context]) -> str:
     """Retrieve user information based on user ID."""
@@ -42,7 +43,7 @@ model = init_chat_model(
     model_provider="openai",
     api_key="sk-8710483a982e426aa08765f872601588",
     base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",
-    temperature=0,
+    temperature=0.1,
     extra_body={
         "enable_thinking": False   # 👈 关键：关闭 thinking mode
     }
@@ -67,6 +68,10 @@ class ResponseFormat:
 # Set up memory
 checkpointer = InMemorySaver()
 
+# checkpointer和context_schema的区别：
+# 👉 memory（checkpointer）是“对话历史”
+# 👉 context_schema 是“运行时附加信息”
+
 # Create agent
 agent = create_agent(
     model=model,
@@ -84,7 +89,7 @@ config = {"configurable": {"thread_id": "1"}}
 response = agent.invoke(
     {"messages": [{"role": "user", "content": "what is the weather outside?"}]},
     config=config,
-    context=Context(user_id="1")
+    context=Context(user_id="1") # get_user_location(runtime: ToolRuntime[Context])的来源 
 )
 
 print(response['structured_response'])
