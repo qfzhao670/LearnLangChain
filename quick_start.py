@@ -48,13 +48,6 @@ model = init_chat_model(
         "enable_thinking": False   # 👈 关键：关闭 thinking mode
     }
 )
-# model = init_chat_model(
-#     model="deepseek-chat",
-#     model_provider="openai",
-#     api_key="sk-48f60e3c7602404fb45123ee1f7aae1c",
-#     base_url="https://api.deepseek.com",
-#     temperature=0
-# )
 
 # Define response format
 @dataclass
@@ -93,12 +86,6 @@ response = agent.invoke(
 )
 
 print(response['structured_response'])
-# print(response["messages"][-1].content)
-# ResponseFormat(
-#     punny_response="Florida is still having a 'sun-derful' day! The sunshine is playing 'ray-dio' hits all day long! I'd say it's the perfect weather for some 'solar-bration'! If you were hoping for rain, I'm afraid that idea is all 'washed up' - the forecast remains 'clear-ly' brilliant!",
-#     weather_conditions="It's always sunny in Florida!"
-# )
-
 
 # Note that we can continue the conversation using the same `thread_id`.
 response = agent.invoke(
@@ -108,8 +95,3 @@ response = agent.invoke(
 )
 
 print(response['structured_response'])
-# print(response["messages"][-1].content)
-# ResponseFormat(
-#     punny_response="You're 'thund-erfully' welcome! It's always a 'breeze' to help you stay 'current' with the weather. I'm just 'cloud'-ing around waiting to 'shower' you with more forecasts whenever you need them. Have a 'sun-sational' day in the Florida sunshine!",
-#     weather_conditions=None
-# )
